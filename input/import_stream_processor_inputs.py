@@ -3,6 +3,7 @@ import os
 from utils.merge_two_datastream import *
 from utils.hand_orientation import *
 from utils.orientation_mapping import *
+from features.compute_basic_feature import *
 
 LEFT_WRIST = 'leftwrist'
 RIGHT_WRIST = 'rightwrist'
@@ -130,8 +131,6 @@ def get_gyroscope(data_dir, wrist, ori, is_new_device=False):
             gyro = [[v[0], fac[0]*v[1], fac[1]*gy[i][1], fac[2]*gz[i][1]] for i, v in enumerate(gx)]
     return gyro
 
-def get_magnitude(ax, ay, az):
-    return math.sqrt(ax * ax + ay * ay + az * az)
 
 
 def get_accel_gyro_mag_orientation(data_dir, wrist, ori=1, is_new_device=False):
@@ -153,6 +152,12 @@ def get_accel_gyro_mag_orientation(data_dir, wrist, ori=1, is_new_device=False):
     Omag = [get_magnitude(v[9], v[10], v[11]) for v in AGMO]
     AGMO = list(np.column_stack((AGMO, Omag)))
     return AGMO
+
+def get_accel_gyro(data_dir, wrist, ori=1, is_new_device=False):
+
+    accel = get_accelerometer(data_dir, wrist, ori, is_new_device)
+    gyro = get_gyroscope(data_dir, wrist, ori, is_new_device)
+    return accel, gyro
 
 
 # ---- FOR GROUNDTRUTH -----

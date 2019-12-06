@@ -4,22 +4,22 @@ def getInterpoletedValue(g0, g1, t0, t1, t):
     g = g0 + (g1 - g0) * (t - t0) / (t1 - t0)
     return g
 
-def merge2stream(At, Gt, Gx):
+def merge2stream(expectedTimeStampList, currentTimeStampList, currentDataStream):
     i = 0
     j = 0
-    _Gx = [0] * len(At)
-    while (i < len(At)) and (j < len(Gt)):
-        while Gt[j] < At[i]:
+    expectedDataStream = [0] * len(expectedTimeStampList)
+    while (i < len(expectedTimeStampList)) and (j < len(currentTimeStampList)):
+        while currentTimeStampList[j] < expectedTimeStampList[i]:
             j = j + 1
-            if j >= len(Gt):
+            if j >= len(currentTimeStampList):
                 break
-        if j < len(Gt):
-            if (At[i] == Gt[j]) | (j == 0):
-                _Gx[i] = Gx[j]
+        if j < len(currentTimeStampList):
+            if (expectedTimeStampList[i] == currentTimeStampList[j]) | (j == 0):
+                expectedDataStream[i] = currentDataStream[j]
             else:
-                _Gx[i] = getInterpoletedValue(Gx[j - 1], Gx[j], Gt[j - 1], Gt[j], At[i])
+                expectedDataStream[i] = getInterpoletedValue(currentDataStream[j - 1], currentDataStream[j], currentTimeStampList[j - 1], currentTimeStampList[j], expectedTimeStampList[i])
         i = i + 1
-    return _Gx
+    return expectedDataStream
 
 def merge(At, Ax, Ay, Az, Gt, Gx, Gy, Gz):
     i = 0

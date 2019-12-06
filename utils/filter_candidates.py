@@ -1,9 +1,9 @@
 
 
-MIN_SEGMENT_DURATION = 3 # seconds
+MIN_SEGMENT_DURATION = 30 # seconds
 MAX_SEGMENT_DURATION = 4*60 # seconds
 
-MIN_SEGMENT_DURATION_flossing = 2 # seconds
+MIN_SEGMENT_DURATION_flossing = 30 # seconds
 # MAX_SEGMENT_DURATION = 3*60 # seconds
 
 INTER_CAND_DIFF = 2 # sec
